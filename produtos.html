@@ -38,6 +38,18 @@
                     <div class="card-body">
                         <h5 class="card-title">Produto 1</h5>
                         <p class="card-text">Descrição do produto 1.</p>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input item-produto" type="checkbox" value="50.00" id="produto1">
+                                <label class="form-check-label" for="produto1">
+                                    Selecionar produto
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="qtd1" class="form-label">Quantidade:</label>
+                            <input type="number" class="form-control qtd-produto" id="qtd1" value="1" min="1">
+                        </div>
                         <a href="#" class="btn btn-primary">Comprar</a>
                     </div>
                 </div>
@@ -48,6 +60,18 @@
                     <div class="card-body">
                         <h5 class="card-title">Produto 2</h5>
                         <p class="card-text">Descrição do produto 2.</p>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input item-produto" type="checkbox" value="75.00" id="produto2">
+                                <label class="form-check-label" for="produto2">
+                                    Selecionar produto
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="qtd2" class="form-label">Quantidade:</label>
+                            <input type="number" class="form-control qtd-produto" id="qtd2" value="1" min="1">
+                        </div>
                         <a href="#" class="btn btn-primary">Comprar</a>
                     </div>
                 </div>
@@ -58,11 +82,28 @@
                     <div class="card-body">
                         <h5 class="card-title">Produto 3</h5>
                         <p class="card-text">Descrição do produto 3.</p>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input item-produto" type="checkbox" value="100.00" id="produto3">
+                                <label class="form-check-label" for="produto3">
+                                    Selecionar produto
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="qtd3" class="form-label">Quantidade:</label>
+                            <input type="number" class="form-control qtd-produto" id="qtd3" value="1" min="1">
+                        </div>
                         <a href="#" class="btn btn-primary">Comprar</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="alert alert-info text-center mt-5">
+        <h3>Valor Total: R$ <span id="valor-total">0,00</span></h3>
+    </div>
+    <script src="/js/script.js"></script>
 </body>
 </html>
