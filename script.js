@@ -19,4 +19,23 @@ document.addEventListener("DOMContentLoaded", function () {
         produtoSelecionado[i].addEventListener("change", calcularTotal);
         quantidades[i].addEventListener("input", calcularTotal);
     }
+
+    var botoes = document.querySelectorAll(".btn-primary");
+
+    botoes.forEach(function (btn, i) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            var carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
+
+            carrinho.push({
+                produto: "produto " + (i + 1),
+                preco: produtoSelecionado[i].value,
+                quantidade: quantidades[i].value
+            });
+
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+            alert("produto adicionado ao carrinho com sucesso");
+        });
+    });
 });
