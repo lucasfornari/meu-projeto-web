@@ -22,20 +22,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var botoes = document.querySelectorAll(".btn-primary");
 
+    var botoes = document.querySelectorAll(".btn-adicionar");
+
     botoes.forEach(function (btn, i) {
         btn.addEventListener("click", function (e) {
             e.preventDefault();
 
+            if (!produtoSelecionado[i].checked) {
+                alert("selecione algum protudo");
+                return;
+            }
+
             var carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
 
             carrinho.push({
-                produto: "produto " + (i + 1),
+                nome: "produto " + (i + 1),
                 preco: produtoSelecionado[i].value,
                 quantidade: quantidades[i].value
             });
 
             localStorage.setItem("carrinho", JSON.stringify(carrinho));
-            alert("produto adicionado ao carrinho com sucesso");
+            alert("produto adicionado ao carrinho!");
         });
     });
 });
