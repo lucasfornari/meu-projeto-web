@@ -20,8 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
         quantidades[i].addEventListener("input", calcularTotal);
     }
 
-    var botoes = document.querySelectorAll(".btn-primary");
-
     var botoes = document.querySelectorAll(".btn-adicionar");
 
     botoes.forEach(function (btn, i) {

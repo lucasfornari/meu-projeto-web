@@ -93,7 +93,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h6 class="mb-1">${produto.nome || 'Produto'}</h6>
-                                <p class="mb-0 text-muted">R$ ${(produto.preco || 0).toFixed(2)}</p>
+                                <p class="mb-0 text-muted">R$ ${Number(produto.preco).toFixed(2)} x ${produto.quantidade}</p>
                             </div>
                             <button type="button" class="btn btn-sm btn-outline-danger" onclick="removerProduto(${index})">
                                 Remover
