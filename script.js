@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function carregarDepoimentos() {
         try {
-            const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=3");
+            const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=6");
             const dados = await response.json();
             
             const listaDepoimentos = document.getElementById("lista-depoimentos");
