@@ -21,13 +21,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     var botoes = document.querySelectorAll(".btn-adicionar");
+    var alertContainer = document.createElement("div");
+    alertContainer.id = "alert-container";
+    var totalProdutoElement = document.getElementById("valor-total");
+    totalProdutoElement.parentNode.insertBefore(alertContainer, totalProdutoElement);
+
+    function mostrarAlerta(mensagem, tipo) {
+        var alertDiv = document.createElement("div");
+        alertDiv.className = "alert alert-" + tipo + " alert-dismissible fade show";
+        alertDiv.setAttribute("role", "alert");
+        alertDiv.innerHTML = `
+            ${mensagem}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        alertContainer.appendChild(alertDiv);
+
+        setTimeout(function() {
+            alertDiv.remove();
+        }, 5000);
+    }
 
     botoes.forEach(function (btn, i) {
         btn.addEventListener("click", function (e) {
             e.preventDefault();
 
             if (!produtoSelecionado[i].checked) {
-                alert("selecione algum protudo");
+                mostrarAlerta("Selecione algum produto", "warning");
                 return;
             }
 
@@ -40,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             localStorage.setItem("carrinho", JSON.stringify(carrinho));
-            alert("produto adicionado ao carrinho!");
+            mostrarAlerta("Produto adicionado ao carrinho!", "success");
         });
     });
 });

@@ -69,11 +69,30 @@
                             </div>
 
                             <div class="d-grid gap-2 d-sm-flex">
-                                <button type="submit" class="btn btn-success btn-lg">Finalizar Compra</button>
                                 <button type="button" class="btn btn-danger btn-lg" id="btnLimpar">Limpar Carrinho</button>
+                                <button type="submit" class="btn btn-success btn-lg">Finalizar Compra</button>
+
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalConfirmacao" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Confirmar Ação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMensagem">Deseja continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmar">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -109,24 +128,54 @@
             carrinhoLista.innerHTML = html;
         }
 
+        function exibirAlerta(mensagem, tipo = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${tipo} alert-dismissible fade show`;
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = `
+                ${mensagem}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.row'));
+        }
+
         function removerProduto(index) {
             const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-            carrinho.splice(index, 1);
-            localStorage.setItem("carrinho", JSON.stringify(carrinho));
-            carregarCarrinho();
+            const nomeProduto = carrinho[index].nome || 'Produto';
+            
+            const modalConfirm = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
+            document.getElementById('modalMensagem').textContent = `Deseja remover "${nomeProduto}" do carrinho?`;
+            
+            document.getElementById('btnConfirmar').onclick = function() {
+                carrinho.splice(index, 1);
+                localStorage.setItem("carrinho", JSON.stringify(carrinho));
+                exibirAlerta(`Produto <strong>${nomeProduto}</strong> removido do carrinho.`, 'warning');
+                carregarCarrinho();
+                modalConfirm.hide();
+            };
+            
+            modalConfirm.show();
         }
 
         document.getElementById("btnLimpar").addEventListener("click", function() {
-            if (confirm("Deseja limpar todo o carrinho?")) {
+            const modalConfirm = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
+            document.getElementById('modalLabel').textContent = 'Limpar Carrinho';
+            document.getElementById('modalMensagem').textContent = 'Deseja limpar todo o carrinho?';
+            
+            document.getElementById('btnConfirmar').onclick = function() {
                 localStorage.removeItem("carrinho");
+                exibirAlerta('Carrinho limpo com sucesso!', 'info');
                 carregarCarrinho();
-            }
+                modalConfirm.hide();
+            };
+            
+            modalConfirm.show();
         });
 
         document.getElementById("formPagamento").addEventListener("submit", function(e) {
             e.preventDefault();
             const metodo = document.querySelector('input[name="pagamento"]:checked').value;
-            alert(`Compra finalizada com sucesso! Método de pagamento: ${metodo}`);
+            exibirAlerta(`Compra finalizada com sucesso! Método de pagamento: <strong>${metodo}</strong>`, 'success');
         });
 
         carregarCarrinho();
