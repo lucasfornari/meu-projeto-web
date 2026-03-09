@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 total = total + (preco * quantidade);
             }
         }
-        totalProduto.innerText = total.toFixed(2);
+        totalProduto.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
     for (var i = 0; i < produtoSelecionado.length; i++) {
         produtoSelecionado[i].addEventListener("change", calcularTotal);
@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             carrinho.push({
                 nome: "produto " + (i + 1),
-                preco: produtoSelecionado[i].value,
-                quantidade: quantidades[i].value
+                preco: Number(produtoSelecionado[i].value),
+                quantidade: Number(quantidades[i].value)
             });
 
             localStorage.setItem("carrinho", JSON.stringify(carrinho));
@@ -44,3 +44,35 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+async function carregarDepoimentos() {
+        try {
+            const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=3");
+            const dados = await response.json();
+            
+            const listaDepoimentos = document.getElementById("lista-depoimentos");
+            
+            listaDepoimentos.innerHTML = '<div class="row">';
+            
+            dados.forEach(function(item) {
+                const card = `
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.name}</h5>
+                                <p class="card-text">${item.body}</p>
+                                <small class="text-muted">Por: ${item.email}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listaDepoimentos.innerHTML += card;
+            });
+            
+            listaDepoimentos.innerHTML += '</div>';
+        } catch (erro) {
+            console.error("Erro ao carregar depoimentos:", erro);
+        }
+    }
+    
+    carregarDepoimentos();
