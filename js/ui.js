@@ -1,10 +1,5 @@
-// =============================================
-// ui.js — Manipulação do DOM / Interface
-// =============================================
-
 /**
- * Renderiza cards de depoimentos na div#lista-depoimentos
- * @param {Array} dados - Array de objetos vindos da API
+ * @param {Array} dados
  */
 export function renderizarDepoimentos(dados) {
     const lista = document.getElementById("lista-depoimentos");
@@ -24,10 +19,9 @@ export function renderizarDepoimentos(dados) {
 }
 
 /**
- * Injeta um alerta Bootstrap dentro de um container pelo id
- * @param {string} mensagem - Texto do alerta
- * @param {string} tipo     - "success" | "danger" | "warning" | "info"
- * @param {string} containerId - id do elemento que receberá o alerta
+ * @param {string} mensagem
+ * @param {string} tipo
+ * @param {string} containerId
  */
 export function mostrarAlerta(mensagem, tipo, containerId) {
     const container = document.getElementById(containerId);

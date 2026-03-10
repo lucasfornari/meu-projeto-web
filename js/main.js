@@ -1,11 +1,8 @@
-// =============================================
-// main.js — Arquivo principal (event listeners)
-// =============================================
+
 import { carregarDepoimentos, enviarFormulario } from "./api.js";
 import { renderizarDepoimentos, mostrarAlerta } from "./ui.js";
 
 
-// ─── DEPOIMENTOS (index.html e depoimentos.html) ──────────────────────────────
 if (document.getElementById("lista-depoimentos")) {
     carregarDepoimentos()
         .then(dados => renderizarDepoimentos(dados))
@@ -13,7 +10,6 @@ if (document.getElementById("lista-depoimentos")) {
 }
 
 
-// ─── SIMULADOR DE ORÇAMENTO (produtos.html) ───────────────────────────────────
 const checkboxes  = document.querySelectorAll(".item-produto");
 const quantidades = document.querySelectorAll(".qtd-produto");
 const totalEl     = document.getElementById("valor-total");
@@ -39,20 +35,18 @@ checkboxes.forEach((cb, i) => {
     if (quantidades[i]) quantidades[i].addEventListener("input", calcularTotal);
 });
 
-calcularTotal(); // estado inicial
+calcularTotal();
 
 
-// ─── MODAL DINÂMICO (produtos.html) — Step 22 ────────────────────────────────
 const produtoModal = document.getElementById("produtoModal");
 
 if (produtoModal) {
     produtoModal.addEventListener("show.bs.modal", function (event) {
-        const botao      = event.relatedTarget;                          // botão que abriu o modal
+        const botao      = event.relatedTarget;
         const nome       = botao.getAttribute("data-nome");
         const descricao  = botao.getAttribute("data-descricao");
         const preco      = botao.getAttribute("data-preco");
 
-        // Injeta o conteúdo correto no modal vazio
         document.getElementById("modalNome").textContent = nome;
         document.getElementById("modalDescricao").textContent = descricao;
         document.getElementById("modalPreco").textContent =
@@ -61,7 +55,6 @@ if (produtoModal) {
 }
 
 
-// ─── FORMULÁRIO DE CONTATO (contato.html) — Step 20 ──────────────────────────
 const formContato = document.querySelector("form#form-contato");
 
 if (formContato) {

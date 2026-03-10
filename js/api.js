@@ -1,18 +1,10 @@
-// =============================================
-// api.js — Comunicação com APIs externas
-// =============================================
-
-/**
- * Busca depoimentos na API pública JSONPlaceholder (GET)
- */
 export async function carregarDepoimentos() {
-    const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=3");
+    const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=6");
     if (!response.ok) throw new Error("Falha ao buscar depoimentos");
     return await response.json();
 }
 
 /**
- * Envia dados do formulário de contato para JSONPlaceholder (POST)
  * @param {string} nome
  * @param {string} email
  * @param {string} mensagem

@@ -15,18 +15,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="produtos.html">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contato.html">Contato</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="depoimentos.html">Depoimentos</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="produtos.html">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="depoimentos.html">Depoimentos</a></li>
                 </ul>
             </div>
         </div>
@@ -45,8 +37,6 @@
                         <h5 class="card-title">Salame Corrosivo Paranormal</h5>
                         <p class="card-text text-muted">Criado sob condições inexplicáveis. Picante, misterioso e capaz de dissolver o ácido.</p>
                         <p class="fw-bold">R$ 50,00</p>
-
-                        <!-- Simulador de Orçamento -->
                         <div class="form-check mb-2">
                             <input class="form-check-input item-produto" type="checkbox" value="50.00" id="produto1">
                             <label class="form-check-label" for="produto1">Selecionar produto</label>
@@ -55,17 +45,12 @@
                             <label for="qtd1" class="form-label">Quantidade:</label>
                             <input type="number" class="form-control qtd-produto" id="qtd1" value="1" min="1">
                         </div>
-
-                        <div class="mt-auto d-flex gap-2">
-                            <!-- Step 22: botão Ver Detalhes com data-attributes -->
+                        <div class="mt-auto">
                             <button type="button" class="btn btn-outline-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#produtoModal"
+                                data-bs-toggle="modal" data-bs-target="#produtoModal"
                                 data-nome="Salame Corrosivo Paranormal"
                                 data-descricao="Criado sob condições inexplicáveis. Picante, misterioso e capaz de dissolver o ácido. Produto exclusivo para paladares corajosos."
-                                data-preco="50.00">
-                                Ver Detalhes
-                            </button>
+                                data-preco="50.00">Ver Detalhes</button>
                         </div>
                     </div>
                 </div>
@@ -79,7 +64,6 @@
                         <h5 class="card-title">Sabonete de Alho</h5>
                         <p class="card-text text-muted">Remove sujeira, energias negativas e possivelmente vampiros. Aroma intenso e memorável.</p>
                         <p class="fw-bold">R$ 75,00</p>
-
                         <div class="form-check mb-2">
                             <input class="form-check-input item-produto" type="checkbox" value="75.00" id="produto2">
                             <label class="form-check-label" for="produto2">Selecionar produto</label>
@@ -88,16 +72,12 @@
                             <label for="qtd2" class="form-label">Quantidade:</label>
                             <input type="number" class="form-control qtd-produto" id="qtd2" value="1" min="1">
                         </div>
-
-                        <div class="mt-auto d-flex gap-2">
+                        <div class="mt-auto">
                             <button type="button" class="btn btn-outline-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#produtoModal"
+                                data-bs-toggle="modal" data-bs-target="#produtoModal"
                                 data-nome="Sabonete de Alho"
                                 data-descricao="Remove sujeira, energias negativas e possivelmente vampiros. Aroma intenso e memorável. Dermatologicamente não testado em humanos comuns."
-                                data-preco="75.00">
-                                Ver Detalhes
-                            </button>
+                                data-preco="75.00">Ver Detalhes</button>
                         </div>
                     </div>
                 </div>
@@ -111,7 +91,6 @@
                         <h5 class="card-title">Chapéu de Antena Paraguayo</h5>
                         <p class="card-text text-muted">Capta sinais, ideias aleatórias e talvez estações de rádio de outro país.</p>
                         <p class="fw-bold">R$ 100,00</p>
-
                         <div class="form-check mb-2">
                             <input class="form-check-input item-produto" type="checkbox" value="100.00" id="produto3">
                             <label class="form-check-label" for="produto3">Selecionar produto</label>
@@ -120,23 +99,19 @@
                             <label for="qtd3" class="form-label">Quantidade:</label>
                             <input type="number" class="form-control qtd-produto" id="qtd3" value="1" min="1">
                         </div>
-
-                        <div class="mt-auto d-flex gap-2">
+                        <div class="mt-auto">
                             <button type="button" class="btn btn-outline-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#produtoModal"
+                                data-bs-toggle="modal" data-bs-target="#produtoModal"
                                 data-nome="Chapéu de Antena Paraguayo"
                                 data-descricao="Capta sinais, ideias aleatórias e talvez estações de rádio de outro país. Acompanha manual de instruções em guarani."
-                                data-preco="100.00">
-                                Ver Detalhes
-                            </button>
+                                data-preco="100.00">Ver Detalhes</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div><!-- /row -->
-    </div><!-- /container -->
+        </div>
+    </div>
 
     <!-- Simulador de Orçamento -->
     <div class="alert alert-info text-center mt-5 mx-4">
@@ -144,19 +119,15 @@
         <a href="compra.html" class="btn btn-primary mt-3" id="btn-compra" disabled>Concluir Compra</a>
     </div>
 
-    <!-- ================================================== -->
-    <!-- Step 22: Modal VAZIO — conteúdo injetado pelo JS   -->
-    <!-- ================================================== -->
+    <!-- Step 22: Modal vazio — conteúdo injetado pelo script.js -->
     <div class="modal fade" id="produtoModal" tabindex="-1" aria-labelledby="produtoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <!-- Título injetado pelo main.js -->
                     <h5 class="modal-title" id="modalNome"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Descrição injetada pelo main.js -->
                     <p id="modalDescricao" class="text-muted"></p>
                     <hr>
                     <p class="fw-bold fs-5">Preço: <span id="modalPreco" class="text-success"></span></p>
@@ -170,7 +141,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Step 21: Módulo ES6 principal -->
-    <script type="module" src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
