@@ -1,113 +1,128 @@
-
 async function carregarDepoimentos() {
-    const lista = document.getElementById("lista-depoimentos");
+    var lista = document.getElementById("lista-depoimentos");
     if (!lista) return;
 
-    try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=6");
-        const dados = await response.json();
+    var response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=3");
+    var dados = await response.json();
 
-        lista.innerHTML = dados.map(item => `
+    dados.forEach(function(item) {
+        lista.innerHTML += `
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-start">
-                        <h5 class="card-title text-primary">${item.name}</h5>
-                        <p class="card-text text-muted">${item.body}</p>
-                        <small class="text-secondary"><em>Por: ${item.email}</em></small>
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.name}</h5>
+                        <p class="card-text">${item.body}</p>
+                        <small class="text-muted">Por: ${item.email}</small>
                     </div>
                 </div>
             </div>
-        `).join("");
-    } catch (erro) {
-        console.error("Erro ao carregar depoimentos:", erro);
-        lista.innerHTML = '<div class="col-12"><p class="text-danger">Não foi possível carregar os depoimentos.</p></div>';
-    }
+        `;
+    });
+}
+
+function mostrarAlerta(containerId, mensagem, tipo) {
+    var div = document.getElementById(containerId);
+    if (!div) return;
+    div.innerHTML = '<div class="alert alert-' + tipo + ' alert-dismissible fade show" role="alert">' + mensagem + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+    setTimeout(function() { div.innerHTML = ""; }, 4000);
 }
 
 carregarDepoimentos();
 
-document.addEventListener("DOMContentLoaded", function () {
+var checkboxes = document.querySelectorAll(".item-produto");
+var quantidades = document.querySelectorAll(".qtd-produto");
 
-    const checkboxes  = document.querySelectorAll(".item-produto");
-    const quantidades = document.querySelectorAll(".qtd-produto");
-    const totalEl     = document.getElementById("valor-total");
-    const btnCompra   = document.getElementById("btn-compra");
-
-    function calcularTotal() {
-        let total = 0;
-        checkboxes.forEach((cb, i) => {
-            if (cb.checked) {
-                total += parseFloat(cb.value) * parseInt(quantidades[i].value || 1);
-            }
-        });
-        if (totalEl) {
-            totalEl.innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-        }
-        if (btnCompra) {
-            btnCompra.disabled = document.querySelectorAll(".item-produto:checked").length === 0;
+function calcularTotal() {
+    var total = 0;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            var preco = parseFloat(checkboxes[i].value);
+            var qtd = parseInt(quantidades[i].value);
+            total = total + (preco * qtd);
         }
     }
+    if (document.getElementById("valor-total")) {
+        document.getElementById("valor-total").innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+    if (document.getElementById("btn-compra")) {
+        document.getElementById("btn-compra").disabled = document.querySelectorAll(".item-produto:checked").length === 0;
+    }
+}
 
-    checkboxes.forEach((cb, i) => {
-        cb.addEventListener("change", calcularTotal);
-        if (quantidades[i]) quantidades[i].addEventListener("input", calcularTotal);
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("change", calcularTotal);
+    quantidades[i].addEventListener("change", calcularTotal);
+}
+
+calcularTotal();
+
+var botoes = document.querySelectorAll(".btn-adicionar");
+for (var i = 0; i < botoes.length; i++) {
+    botoes[i].addEventListener("click", function(e) {
+        var btn = e.currentTarget;
+        var index = btn.getAttribute("data-index");
+        var cb = checkboxes[index];
+        var qtd = quantidades[index];
+
+        if (!cb.checked) {
+            mostrarAlerta("alert-carrinho", "Selecione o produto antes de adicionar ao carrinho.", "warning");
+            return;
+        }
+
+        var carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
+        var nome = btn.getAttribute("data-nome");
+        var preco = parseFloat(cb.value);
+        var quantidade = parseInt(qtd.value);
+
+        var encontrado = false;
+        for (var j = 0; j < carrinho.length; j++) {
+            if (carrinho[j].nome === nome) {
+                carrinho[j].quantidade += quantidade;
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            carrinho.push({ nome: nome, preco: preco, quantidade: quantidade });
+        }
+
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        mostrarAlerta("alert-carrinho", nome + " adicionado ao carrinho!", "success");
     });
+}
 
-    calcularTotal();
+var produtoModal = document.getElementById("produtoModal");
+if (produtoModal) {
+    produtoModal.addEventListener("show.bs.modal", function(event) {
+        var botao = event.relatedTarget;
+        document.getElementById("modalNome").textContent = botao.getAttribute("data-nome");
+        document.getElementById("modalDescricao").textContent = botao.getAttribute("data-descricao");
+        document.getElementById("modalPreco").textContent = "R$ " + botao.getAttribute("data-preco");
+    });
+}
 
-    const produtoModal = document.getElementById("produtoModal");
+var formContato = document.getElementById("form-contato");
+if (formContato) {
+    formContato.addEventListener("submit", async function(e) {
+        e.preventDefault();
 
-    if (produtoModal) {
-        produtoModal.addEventListener("show.bs.modal", function (event) {
-            const botao     = event.relatedTarget;
-            const nome      = botao.getAttribute("data-nome");
-            const descricao = botao.getAttribute("data-descricao");
-            const preco     = botao.getAttribute("data-preco");
+        var nome = document.getElementById("nome").value;
+        var email = document.getElementById("email").value;
+        var mensagem = document.getElementById("mensagem").value;
 
-            document.getElementById("modalNome").textContent = nome;
-            document.getElementById("modalDescricao").textContent = descricao;
-            document.getElementById("modalPreco").textContent =
-                parseFloat(preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        var dados = { nome: nome, email: email, mensagem: mensagem };
+
+        var response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(dados)
         });
-    }
 
-    const formContato = document.getElementById("form-contato");
-
-    if (formContato) {
-        formContato.addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            const nome     = document.getElementById("nome").value.trim();
-            const email    = document.getElementById("email").value.trim();
-            const mensagem = document.getElementById("mensagem").value.trim();
-            const alertDiv = document.getElementById("alert-form");
-
-            function mostrarAlerta(msg, tipo) {
-                alertDiv.innerHTML = `
-                    <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
-                        ${msg}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                    </div>`;
-                setTimeout(() => alertDiv.innerHTML = "", 6000);
-            }
-
-            try {
-                const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-                    method: "POST",
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify({ nome, email, mensagem })
-                });
-
-                if (response.status === 201) {
-                    mostrarAlerta("✅ Mensagem enviada com sucesso! Entraremos em contato em breve.", "success");
-                    formContato.reset();
-                } else {
-                    mostrarAlerta("❌ Erro ao enviar mensagem. Tente novamente.", "danger");
-                }
-            } catch (erro) {
-                mostrarAlerta("❌ Erro de conexão. Verifique sua internet.", "danger");
-            }
-        });
-    }
-
-});
+        if (response.status === 201) {
+            mostrarAlerta("alert-form", "Mensagem enviada com sucesso!", "success");
+            formContato.reset();
+        } else {
+            mostrarAlerta("alert-form", "Erro ao enviar mensagem.", "danger");
+        }
+    });
+}

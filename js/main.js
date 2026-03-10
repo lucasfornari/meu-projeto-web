@@ -1,93 +1,62 @@
-
 import { carregarDepoimentos, enviarFormulario } from "./api.js";
 import { renderizarDepoimentos, mostrarAlerta } from "./ui.js";
 
-
 if (document.getElementById("lista-depoimentos")) {
-    carregarDepoimentos()
-        .then(dados => renderizarDepoimentos(dados))
-        .catch(err => console.error("Erro ao carregar depoimentos:", err));
+    carregarDepoimentos().then(function(dados) {
+        renderizarDepoimentos(dados);
+    });
 }
 
-
-const checkboxes  = document.querySelectorAll(".item-produto");
-const quantidades = document.querySelectorAll(".qtd-produto");
-const totalEl     = document.getElementById("valor-total");
-const btnCompra   = document.getElementById("btn-compra");
+var checkboxes = document.querySelectorAll(".item-produto");
+var quantidades = document.querySelectorAll(".qtd-produto");
 
 function calcularTotal() {
-    let total = 0;
-    checkboxes.forEach((cb, i) => {
-        if (cb.checked) {
-            total += parseFloat(cb.value) * parseInt(quantidades[i].value || 1);
+    var total = 0;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            total += parseFloat(checkboxes[i].value) * parseInt(quantidades[i].value);
         }
-    });
-    if (totalEl) {
-        totalEl.innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     }
-    if (btnCompra) {
-        btnCompra.disabled = document.querySelectorAll(".item-produto:checked").length === 0;
+    if (document.getElementById("valor-total")) {
+        document.getElementById("valor-total").innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+    if (document.getElementById("btn-compra")) {
+        document.getElementById("btn-compra").disabled = document.querySelectorAll(".item-produto:checked").length === 0;
     }
 }
 
-checkboxes.forEach((cb, i) => {
-    cb.addEventListener("change", calcularTotal);
-    if (quantidades[i]) quantidades[i].addEventListener("input", calcularTotal);
-});
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("change", calcularTotal);
+    quantidades[i].addEventListener("change", calcularTotal);
+}
 
 calcularTotal();
 
-
-const produtoModal = document.getElementById("produtoModal");
-
+var produtoModal = document.getElementById("produtoModal");
 if (produtoModal) {
-    produtoModal.addEventListener("show.bs.modal", function (event) {
-        const botao      = event.relatedTarget;
-        const nome       = botao.getAttribute("data-nome");
-        const descricao  = botao.getAttribute("data-descricao");
-        const preco      = botao.getAttribute("data-preco");
-
-        document.getElementById("modalNome").textContent = nome;
-        document.getElementById("modalDescricao").textContent = descricao;
-        document.getElementById("modalPreco").textContent =
-            parseFloat(preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    produtoModal.addEventListener("show.bs.modal", function(event) {
+        var botao = event.relatedTarget;
+        document.getElementById("modalNome").textContent = botao.getAttribute("data-nome");
+        document.getElementById("modalDescricao").textContent = botao.getAttribute("data-descricao");
+        document.getElementById("modalPreco").textContent = "R$ " + botao.getAttribute("data-preco");
     });
 }
 
-
-const formContato = document.querySelector("form#form-contato");
-
+var formContato = document.getElementById("form-contato");
 if (formContato) {
-    formContato.addEventListener("submit", async function (e) {
+    formContato.addEventListener("submit", async function(e) {
         e.preventDefault();
+        var nome = document.getElementById("nome").value;
+        var email = document.getElementById("email").value;
+        var mensagem = document.getElementById("mensagem").value;
 
-        const nome     = document.getElementById("nome").value.trim();
-        const email    = document.getElementById("email").value.trim();
-        const mensagem = document.getElementById("mensagem").value.trim();
+        var response = await enviarFormulario(nome, email, mensagem);
 
-        try {
-            const response = await enviarFormulario(nome, email, mensagem);
-
-            if (response.status === 201) {
-                mostrarAlerta(
-                    "✅ Mensagem enviada com sucesso! Entraremos em contato em breve.",
-                    "success",
-                    "alert-form"
-                );
-                formContato.reset();
-            } else {
-                mostrarAlerta(
-                    "❌ Erro ao enviar mensagem. Tente novamente.",
-                    "danger",
-                    "alert-form"
-                );
-            }
-        } catch (erro) {
-            mostrarAlerta(
-                "❌ Erro de conexão. Verifique sua internet.",
-                "danger",
-                "alert-form"
-            );
+        if (response.status === 201) {
+            mostrarAlerta("Mensagem enviada com sucesso!", "success", "alert-form");
+            formContato.reset();
+        } else {
+            mostrarAlerta("Erro ao enviar mensagem.", "danger", "alert-form");
         }
     });
 }
