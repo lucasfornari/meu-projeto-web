@@ -82,7 +82,7 @@ for (var i = 0; i < botoes.length; i++) {
         var encontrado = false;
         for (var j = 0; j < carrinho.length; j++) {
             if (carrinho[j].nome === nome) {
-                carrinho[j].quantidade += quantidade;
+                carrinho[j].quantidade = quantidade;
                 encontrado = true;
                 break;
             }
