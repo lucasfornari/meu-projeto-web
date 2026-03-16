@@ -45,7 +45,8 @@ function calcularTotal() {
         document.getElementById("valor-total").innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     }
     if (document.getElementById("btn-compra")) {
-        document.getElementById("btn-compra").disabled = document.querySelectorAll(".item-produto:checked").length === 0;
+        var carrinhoAtual = JSON.parse(localStorage.getItem("carrinho") || "[]");
+        document.getElementById("btn-compra").disabled = carrinhoAtual.length === 0;
     }
 }
 
@@ -87,6 +88,7 @@ for (var i = 0; i < botoes.length; i++) {
         }
 
         localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        calcularTotal();
         mostrarAlerta("alert-carrinho", nome + " adicionado ao carrinho!", "success");
     });
 }
@@ -98,33 +100,6 @@ if (produtoModal) {
         document.getElementById("modalNome").textContent = botao.getAttribute("data-nome");
         document.getElementById("modalDescricao").textContent = botao.getAttribute("data-descricao");
         document.getElementById("modalPreco").textContent = "R$ " + botao.getAttribute("data-preco");
-    });
-}
-
-var formContato = document.getElementById("form-contato");
-if (formContato) {
-    formContato.addEventListener("submit", async function(e) {
-        e.preventDefault();
-
-        var nome = document.getElementById("nome").value;
-        var email = document.getElementById("email").value;
-        var mensagem = document.getElementById("mensagem").value;
-
-        var dados = { nome: nome, email: email, mensagem: mensagem };
-
-        var response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(dados)
-        });
-
-        if (response.status === 201) {
-            mostrarAlerta("alert-form", "Mensagem enviada com sucesso!", "success");
-            formContato.reset();
-            limparEndereco();
-        } else {
-            mostrarAlerta("alert-form", "Erro ao enviar mensagem.", "danger");
-        }
     });
 }
 
@@ -164,6 +139,33 @@ if (campoCep) {
         } catch (erro) {
             mostrarAlerta("alert-form", "Erro ao buscar CEP. Verifique sua conexão.", "danger");
             limparEndereco();
+        }
+    });
+}
+
+var formContato = document.getElementById("form-contato");
+if (formContato) {
+    formContato.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        var nome = document.getElementById("nome").value;
+        var email = document.getElementById("email").value;
+        var mensagem = document.getElementById("mensagem").value;
+
+        var dados = { nome: nome, email: email, mensagem: mensagem };
+
+        var response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(dados)
+        });
+
+        if (response.status === 201) {
+            mostrarAlerta("alert-form", "Mensagem enviada com sucesso!", "success");
+            formContato.reset();
+            limparEndereco();
+        } else {
+            mostrarAlerta("alert-form", "Erro ao enviar mensagem.", "danger");
         }
     });
 }

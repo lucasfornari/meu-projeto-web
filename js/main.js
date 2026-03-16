@@ -1,11 +1,9 @@
 import { carregarDepoimentos, enviarFormulario, buscarCep } from "./api.js";
-import { renderizarDepoimentos, mostrarAlerta } from "./ui.js";
+import { mostrarAlerta, renderizarDepoimentos, limparEndereco } from "./ui.js";
 
-if (document.getElementById("lista-depoimentos")) {
-    carregarDepoimentos().then(function(dados) {
-        renderizarDepoimentos(dados);
-    });
-}
+carregarDepoimentos().then(function(dados) {
+    renderizarDepoimentos(dados);
+});
 
 var checkboxes = document.querySelectorAll(".item-produto");
 var quantidades = document.querySelectorAll(".qtd-produto");
@@ -21,7 +19,8 @@ function calcularTotal() {
         document.getElementById("valor-total").innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     }
     if (document.getElementById("btn-compra")) {
-        document.getElementById("btn-compra").disabled = document.querySelectorAll(".item-produto:checked").length === 0;
+        var carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
+        document.getElementById("btn-compra").disabled = carrinho.length === 0;
     }
 }
 
@@ -31,6 +30,42 @@ for (var i = 0; i < checkboxes.length; i++) {
 }
 
 calcularTotal();
+
+var botoes = document.querySelectorAll(".btn-adicionar");
+for (var i = 0; i < botoes.length; i++) {
+    botoes[i].addEventListener("click", function(e) {
+        var btn = e.currentTarget;
+        var index = btn.getAttribute("data-index");
+        var cb = checkboxes[index];
+        var qtd = quantidades[index];
+
+        if (!cb.checked) {
+            mostrarAlerta("alert-carrinho", "Selecione o produto antes de adicionar ao carrinho.", "warning");
+            return;
+        }
+
+        var carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
+        var nome = btn.getAttribute("data-nome");
+        var preco = parseFloat(cb.value);
+        var quantidade = parseInt(qtd.value);
+
+        var encontrado = false;
+        for (var j = 0; j < carrinho.length; j++) {
+            if (carrinho[j].nome === nome) {
+                carrinho[j].quantidade += quantidade;
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            carrinho.push({ nome: nome, preco: preco, quantidade: quantidade });
+        }
+
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        calcularTotal();
+        mostrarAlerta("alert-carrinho", nome + " adicionado ao carrinho!", "success");
+    });
+}
 
 var produtoModal = document.getElementById("produtoModal");
 if (produtoModal) {
@@ -42,40 +77,28 @@ if (produtoModal) {
     });
 }
 
-function limparEndereco() {
-    var campos = ["rua", "bairro", "cidade", "estado"];
-    for (var i = 0; i < campos.length; i++) {
-        var el = document.getElementById(campos[i]);
-        if (el) el.value = "";
-    }
-}
-
 var campoCep = document.getElementById("cep");
 if (campoCep) {
     campoCep.addEventListener("blur", async function() {
         var cep = campoCep.value.replace(/\D/g, "");
-
         if (cep.length !== 8) {
-            mostrarAlerta("CEP inválido. Digite 8 números.", "danger", "alert-form");
+            mostrarAlerta("alert-form", "CEP inválido. Digite 8 números.", "danger");
             limparEndereco();
             return;
         }
-
         try {
             var dados = await buscarCep(cep);
-
             if (dados.erro) {
-                mostrarAlerta("CEP não encontrado.", "danger", "alert-form");
+                mostrarAlerta("alert-form", "CEP não encontrado.", "danger");
                 limparEndereco();
                 return;
             }
-
             document.getElementById("rua").value = dados.logradouro;
             document.getElementById("bairro").value = dados.bairro;
             document.getElementById("cidade").value = dados.localidade;
             document.getElementById("estado").value = dados.uf;
         } catch (erro) {
-            mostrarAlerta("Erro ao buscar CEP. Verifique sua conexão.", "danger", "alert-form");
+            mostrarAlerta("alert-form", "Erro ao buscar CEP. Verifique sua conexão.", "danger");
             limparEndereco();
         }
     });
@@ -92,11 +115,11 @@ if (formContato) {
         var response = await enviarFormulario(nome, email, mensagem);
 
         if (response.status === 201) {
-            mostrarAlerta("Mensagem enviada com sucesso!", "success", "alert-form");
+            mostrarAlerta("alert-form", "Mensagem enviada com sucesso!", "success");
             formContato.reset();
             limparEndereco();
         } else {
-            mostrarAlerta("Erro ao enviar mensagem.", "danger", "alert-form");
+            mostrarAlerta("alert-form", "Erro ao enviar mensagem.", "danger");
         }
     });
 }
