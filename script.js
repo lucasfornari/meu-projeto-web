@@ -1,3 +1,18 @@
+var temaSalvo = localStorage.getItem("tema");
+if (temaSalvo) {
+    document.documentElement.setAttribute("data-bs-theme", temaSalvo);
+}
+
+var btnTema = document.getElementById("btn-tema");
+if (btnTema) {
+    btnTema.addEventListener("click", function() {
+        var temaAtual = document.documentElement.getAttribute("data-bs-theme");
+        var novoTema = temaAtual === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-bs-theme", novoTema);
+        localStorage.setItem("tema", novoTema);
+    });
+}
+
 async function carregarDepoimentos() {
     var lista = document.getElementById("lista-depoimentos");
     if (!lista) return;
@@ -5,19 +20,10 @@ async function carregarDepoimentos() {
     var response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=3");
     var dados = await response.json();
 
-    dados.forEach(function(item) {
-        lista.innerHTML += `
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">${item.name}</h5>
-                        <p class="card-text">${item.body}</p>
-                        <small class="text-muted">Por: ${item.email}</small>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
+    for (var i = 0; i < dados.length; i++) {
+        var item = dados[i];
+        lista.innerHTML += '<div class="col-md-4 mb-4"><div class="card h-100"><div class="card-body"><h5 class="card-title">' + item.name + '</h5><p class="card-text">' + item.body + '</p><small class="text-muted">Por: ' + item.email + '</small></div></div></div>';
+    }
 }
 
 function mostrarAlerta(containerId, mensagem, tipo) {
@@ -36,17 +42,15 @@ function calcularTotal() {
     var total = 0;
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            var preco = parseFloat(checkboxes[i].value);
-            var qtd = parseInt(quantidades[i].value);
-            total = total + (preco * qtd);
+            total += parseFloat(checkboxes[i].value) * parseInt(quantidades[i].value);
         }
     }
     if (document.getElementById("valor-total")) {
         document.getElementById("valor-total").innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     }
     if (document.getElementById("btn-compra")) {
-        var carrinhoAtual = JSON.parse(localStorage.getItem("carrinho") || "[]");
-        document.getElementById("btn-compra").disabled = carrinhoAtual.length === 0;
+        var carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
+        document.getElementById("btn-compra").disabled = carrinho.length === 0;
     }
 }
 
@@ -115,23 +119,19 @@ var campoCep = document.getElementById("cep");
 if (campoCep) {
     campoCep.addEventListener("blur", async function() {
         var cep = campoCep.value.replace(/\D/g, "");
-
         if (cep.length !== 8) {
             mostrarAlerta("alert-form", "CEP inválido. Digite 8 números.", "danger");
             limparEndereco();
             return;
         }
-
         try {
             var response = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
             var dados = await response.json();
-
             if (dados.erro) {
                 mostrarAlerta("alert-form", "CEP não encontrado.", "danger");
                 limparEndereco();
                 return;
             }
-
             document.getElementById("rua").value = dados.logradouro;
             document.getElementById("bairro").value = dados.bairro;
             document.getElementById("cidade").value = dados.localidade;
@@ -147,17 +147,14 @@ var formContato = document.getElementById("form-contato");
 if (formContato) {
     formContato.addEventListener("submit", async function(e) {
         e.preventDefault();
-
         var nome = document.getElementById("nome").value;
         var email = document.getElementById("email").value;
         var mensagem = document.getElementById("mensagem").value;
 
-        var dados = { nome: nome, email: email, mensagem: mensagem };
-
         var response = await fetch("https://jsonplaceholder.typicode.com/posts", {
             method: "POST",
             headers: { "Content-type": "application/json" },
-            body: JSON.stringify(dados)
+            body: JSON.stringify({ nome: nome, email: email, mensagem: mensagem })
         });
 
         if (response.status === 201) {

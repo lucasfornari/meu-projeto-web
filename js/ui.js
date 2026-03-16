@@ -21,3 +21,17 @@ export function limparEndereco() {
         if (el) el.value = "";
     }
 }
+
+export function aplicarTema() {
+    var temaSalvo = localStorage.getItem("tema");
+    if (temaSalvo) {
+        document.documentElement.setAttribute("data-bs-theme", temaSalvo);
+    }
+}
+
+export function toggleTema() {
+    var temaAtual = document.documentElement.getAttribute("data-bs-theme");
+    var novoTema = temaAtual === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-bs-theme", novoTema);
+    localStorage.setItem("tema", novoTema);
+}

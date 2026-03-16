@@ -1,5 +1,12 @@
 import { carregarDepoimentos, enviarFormulario, buscarCep } from "./api.js";
-import { mostrarAlerta, renderizarDepoimentos, limparEndereco } from "./ui.js";
+import { mostrarAlerta, renderizarDepoimentos, limparEndereco, aplicarTema, toggleTema } from "./ui.js";
+
+aplicarTema();
+
+var btnTema = document.getElementById("btn-tema");
+if (btnTema) {
+    btnTema.addEventListener("click", toggleTema);
+}
 
 carregarDepoimentos().then(function(dados) {
     renderizarDepoimentos(dados);
