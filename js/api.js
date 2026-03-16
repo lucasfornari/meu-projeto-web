@@ -12,3 +12,9 @@ export async function enviarFormulario(nome, email, mensagem) {
     });
     return response;
 }
+
+export async function buscarCep(cep) {
+    var response = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
+    var dados = await response.json();
+    return dados;
+}

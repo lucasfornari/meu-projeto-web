@@ -1,4 +1,4 @@
-import { carregarDepoimentos, enviarFormulario } from "./api.js";
+import { carregarDepoimentos, enviarFormulario, buscarCep } from "./api.js";
 import { renderizarDepoimentos, mostrarAlerta } from "./ui.js";
 
 if (document.getElementById("lista-depoimentos")) {
@@ -42,6 +42,45 @@ if (produtoModal) {
     });
 }
 
+function limparEndereco() {
+    var campos = ["rua", "bairro", "cidade", "estado"];
+    for (var i = 0; i < campos.length; i++) {
+        var el = document.getElementById(campos[i]);
+        if (el) el.value = "";
+    }
+}
+
+var campoCep = document.getElementById("cep");
+if (campoCep) {
+    campoCep.addEventListener("blur", async function() {
+        var cep = campoCep.value.replace(/\D/g, "");
+
+        if (cep.length !== 8) {
+            mostrarAlerta("CEP inválido. Digite 8 números.", "danger", "alert-form");
+            limparEndereco();
+            return;
+        }
+
+        try {
+            var dados = await buscarCep(cep);
+
+            if (dados.erro) {
+                mostrarAlerta("CEP não encontrado.", "danger", "alert-form");
+                limparEndereco();
+                return;
+            }
+
+            document.getElementById("rua").value = dados.logradouro;
+            document.getElementById("bairro").value = dados.bairro;
+            document.getElementById("cidade").value = dados.localidade;
+            document.getElementById("estado").value = dados.uf;
+        } catch (erro) {
+            mostrarAlerta("Erro ao buscar CEP. Verifique sua conexão.", "danger", "alert-form");
+            limparEndereco();
+        }
+    });
+}
+
 var formContato = document.getElementById("form-contato");
 if (formContato) {
     formContato.addEventListener("submit", async function(e) {
@@ -55,6 +94,7 @@ if (formContato) {
         if (response.status === 201) {
             mostrarAlerta("Mensagem enviada com sucesso!", "success", "alert-form");
             formContato.reset();
+            limparEndereco();
         } else {
             mostrarAlerta("Erro ao enviar mensagem.", "danger", "alert-form");
         }

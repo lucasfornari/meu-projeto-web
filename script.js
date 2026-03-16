@@ -121,8 +121,49 @@ if (formContato) {
         if (response.status === 201) {
             mostrarAlerta("alert-form", "Mensagem enviada com sucesso!", "success");
             formContato.reset();
+            limparEndereco();
         } else {
             mostrarAlerta("alert-form", "Erro ao enviar mensagem.", "danger");
+        }
+    });
+}
+
+function limparEndereco() {
+    var campos = ["rua", "bairro", "cidade", "estado"];
+    for (var i = 0; i < campos.length; i++) {
+        var el = document.getElementById(campos[i]);
+        if (el) el.value = "";
+    }
+}
+
+var campoCep = document.getElementById("cep");
+if (campoCep) {
+    campoCep.addEventListener("blur", async function() {
+        var cep = campoCep.value.replace(/\D/g, "");
+
+        if (cep.length !== 8) {
+            mostrarAlerta("alert-form", "CEP inválido. Digite 8 números.", "danger");
+            limparEndereco();
+            return;
+        }
+
+        try {
+            var response = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
+            var dados = await response.json();
+
+            if (dados.erro) {
+                mostrarAlerta("alert-form", "CEP não encontrado.", "danger");
+                limparEndereco();
+                return;
+            }
+
+            document.getElementById("rua").value = dados.logradouro;
+            document.getElementById("bairro").value = dados.bairro;
+            document.getElementById("cidade").value = dados.localidade;
+            document.getElementById("estado").value = dados.uf;
+        } catch (erro) {
+            mostrarAlerta("alert-form", "Erro ao buscar CEP. Verifique sua conexão.", "danger");
+            limparEndereco();
         }
     });
 }
