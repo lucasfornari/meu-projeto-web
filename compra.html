@@ -75,7 +75,7 @@
             document.documentElement.setAttribute("data-bs-theme", temaSalvo);
         }
 
-        document.getElementById("btn-tema").addEventListener("click", function() {
+        document.getuElementById("btn-tema").addEventListener("click", function() {
             var temaAtual = document.documentElement.getAttribute("data-bs-theme");
             var novoTema = temaAtual === "dark" ? "light" : "dark";
             document.documentElement.setAttribute("data-bs-theme", novoTema);
