@@ -22,14 +22,14 @@ async function carregarDepoimentos() {
 
     for (var i = 0; i < dados.length; i++) {
         var item = dados[i];
-        lista.innerHTML += '<div class="col-md-4 mb-4"><div class="card h-100"><div class="card-body"><h5 class="card-title">' + item.name + '</h5><p class="card-text">' + item.body + '</p><small class="text-muted">Por: ' + item.email + '</small></div></div></div>';
+        lista.innerHTML += "<div class=\"col-md-4 mb-4\"><div class=\"card h-100\"><div class=\"card-body\"><h5 class=\"card-title\">" + item.name + "</h5><p class=\"card-text\">" + item.body + "</p><small class=\"text-muted\">Por: " + item.email + "</small></div></div></div>";
     }
 }
 
 function mostrarAlerta(containerId, mensagem, tipo) {
     var div = document.getElementById(containerId);
     if (!div) return;
-    div.innerHTML = '<div class="alert alert-' + tipo + ' alert-dismissible fade show" role="alert">' + mensagem + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+    div.innerHTML = "<div class=\"alert alert-" + tipo + " alert-dismissible fade show\" role=\"alert\">" + mensagem + "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\"></button></div>";
     setTimeout(function() { div.innerHTML = ""; }, 4000);
 }
 
