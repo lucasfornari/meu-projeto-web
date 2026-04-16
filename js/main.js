@@ -5,17 +5,15 @@ var temas = ['light', 'dark', 'blue', 'green'];
 var temaSalvo = localStorage.getItem('tema');
 if (temaSalvo) document.documentElement.setAttribute('data-theme', temaSalvo);
 
+var seletor = document.getElementById('tema-selector');
+if (seletor && temaSalvo) seletor.value = temaSalvo;
+
 document.getElementById('navbar-toggler')?.addEventListener('click', () => {
   document.getElementById('navbarNav').classList.toggle('open');
-  document.getElementById('btn-tema').classList.toggle('open');
 });
 
-document.getElementById('btn-tema')?.addEventListener('click', () => {
-  var temaAtual =
-    document.documentElement.getAttribute('data-theme') || 'light';
-  var indiceAtual = temas.indexOf(temaAtual);
-  var indiceProximo = (indiceAtual + 1) % temas.length;
-  var novoTema = temas[indiceProximo];
+seletor?.addEventListener('change', (e) => {
+  var novoTema = e.target.value;
   document.documentElement.setAttribute('data-theme', novoTema);
   localStorage.setItem('tema', novoTema);
 });

@@ -1,31 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fornari - Depoimentos</title>
     <!-- aplica o tema antes do render para evitar flash branco -->
-    <script>var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t);</script>
-    <link rel="stylesheet" href="../styles/main.scss">
-</head>
-<body>
+    <script>
+      var t = localStorage.getItem('tema');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    </script>
+    <link rel="stylesheet" href="../styles/main.scss" />
+  </head>
+  <body>
     <nav class="navbar">
-        <a class="navbar-brand" href="../index.html">Meu Projeto Web</a>
-        <button class="navbar-toggler" id="navbar-toggler">☰</button>
-        <ul class="navbar-nav" id="navbarNav">
-            <li><a class="nav-link" href="../index.html">Home</a></li>
-            <li><a class="nav-link" href="produtos.html">Produtos</a></li>
-            <li><a class="nav-link" href="contato.html">Contato</a></li>
-            <li><a class="nav-link active" href="depoimentos.html">Depoimentos</a></li>
-        </ul>
-        <button class="btn btn-outline-light" id="btn-tema">Mudar Tema</button>
+      <a class="navbar-brand" href="../index.html">Meu Projeto Web</a>
+      <button class="navbar-toggler" id="navbar-toggler">☰</button>
+      <ul class="navbar-nav" id="navbarNav">
+        <li><a class="nav-link" href="../index.html">Home</a></li>
+        <li><a class="nav-link" href="produtos.html">Produtos</a></li>
+        <li><a class="nav-link" href="contato.html">Contato</a></li>
+        <li>
+          <a class="nav-link active" href="depoimentos.html">Depoimentos</a>
+        </li>
+      </ul>
+      <select id="tema-selector">
+        <option value="light">Claro</option>
+        <option value="dark">Escuro</option>
+        <option value="green">Verde</option>
+        <option value="blue">Azul</option>
+      </select>
     </nav>
 
     <main>
-        <h2>O que nossos clientes dizem</h2>
-        <div class="depoimentos-grid" id="lista-depoimentos"></div>
+      <h2>O que nossos clientes dizem</h2>
+      <div class="depoimentos-grid" id="lista-depoimentos"></div>
     </main>
 
     <script type="module" src="../js/main.js"></script>
-</body>
+  </body>
 </html>

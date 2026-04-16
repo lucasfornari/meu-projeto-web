@@ -1,121 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fornari - Produtos</title>
     <!-- aplica o tema antes do render para evitar flash branco -->
-    <script>var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t);</script>
-    <link rel="stylesheet" href="../styles/main.scss">
-</head>
-<body>
+    <script>
+      var t = localStorage.getItem('tema');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    </script>
+    <link rel="stylesheet" href="../styles/main.scss" />
+  </head>
+  <body>
     <nav class="navbar">
-        <a class="navbar-brand" href="../index.html">Meu Projeto Web</a>
-        <button class="navbar-toggler" id="navbar-toggler">☰</button>
-        <ul class="navbar-nav" id="navbarNav">
-            <li><a class="nav-link" href="../index.html">Home</a></li>
-            <li><a class="nav-link active" href="produtos.html">Produtos</a></li>
-            <li><a class="nav-link" href="contato.html">Contato</a></li>
-            <li><a class="nav-link" href="depoimentos.html">Depoimentos</a></li>
-        </ul>
-        <button class="btn btn-outline-light" id="btn-tema">Mudar Tema</button>
+      <a class="navbar-brand" href="../index.html">Meu Projeto Web</a>
+      <button class="navbar-toggler" id="navbar-toggler">☰</button>
+      <ul class="navbar-nav" id="navbarNav">
+        <li><a class="nav-link" href="../index.html">Home</a></li>
+        <li><a class="nav-link active" href="produtos.html">Produtos</a></li>
+        <li><a class="nav-link" href="contato.html">Contato</a></li>
+        <li><a class="nav-link" href="depoimentos.html">Depoimentos</a></li>
+      </ul>
+      <select id="tema-selector">
+        <option value="light">Claro</option>
+        <option value="dark">Escuro</option>
+        <option value="green">Verde</option>
+        <option value="blue">Azul</option>
+      </select>
     </nav>
 
     <main>
-        <h1>Produtos</h1>
+      <h1>Produtos</h1>
 
-        <div id="alert-carrinho"></div>
+      <div id="alert-carrinho"></div>
 
-        <div class="produtos-grid">
-            <div class="card">
-                <img src="https://picsum.photos/seed/p1/400/200" alt="Produto 1">
-                <div class="card-body">
-                    <h5 class="card-title">Salame Corrosivo Paranormal</h5>
-                    <p class="card-text">Criado sob condições inexplicáveis. Picante e misterioso.</p>
-                    <p class="card-price">R$ 50,00</p>
-                    <div class="form-check">
-                        <input class="item-produto" type="checkbox" value="50.00" id="produto1">
-                        <label for="produto1">Selecionar</label>
-                    </div>
-                    <label for="qtd1">Quantidade:</label>
-                    <input type="number" class="qtd-produto" id="qtd1" value="1" min="1">
-                    <div class="actions">
-                        <button class="btn btn-primary btn-adicionar" data-index="0" data-nome="Salame Corrosivo Paranormal">Adicionar</button>
-                        <button class="btn btn-outline-secondary btn-ver-detalhes"
-                            data-nome="Salame Corrosivo Paranormal"
-                            data-descricao="Criado sob condições inexplicáveis. Picante, misterioso e capaz de dissolver o ácido."
-                            data-preco="50.00">Ver Detalhes</button>
-                    </div>
-                </div>
+      <div class="produtos-grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/p1/400/200" alt="Produto 1" />
+          <div class="card-body">
+            <h5 class="card-title">Salame Corrosivo Paranormal</h5>
+            <p class="card-text">
+              Criado sob condições inexplicáveis. Picante e misterioso.
+            </p>
+            <p class="card-price">R$ 50,00</p>
+            <div class="form-check">
+              <input
+                class="item-produto"
+                type="checkbox"
+                value="50.00"
+                id="produto1"
+              />
+              <label for="produto1">Selecionar</label>
             </div>
-
-            <div class="card">
-                <img src="https://picsum.photos/seed/p2/400/200" alt="Produto 2">
-                <div class="card-body">
-                    <h5 class="card-title">Sabonete de Alho</h5>
-                    <p class="card-text">Remove sujeira, energias negativas e possivelmente vampiros.</p>
-                    <p class="card-price">R$ 75,00</p>
-                    <div class="form-check">
-                        <input class="item-produto" type="checkbox" value="75.00" id="produto2">
-                        <label for="produto2">Selecionar</label>
-                    </div>
-                    <label for="qtd2">Quantidade:</label>
-                    <input type="number" class="qtd-produto" id="qtd2" value="1" min="1">
-                    <div class="actions">
-                        <button class="btn btn-primary btn-adicionar" data-index="1" data-nome="Sabonete de Alho">Adicionar</button>
-                        <button class="btn btn-outline-secondary btn-ver-detalhes"
-                            data-nome="Sabonete de Alho"
-                            data-descricao="Remove sujeira, energias negativas e possivelmente vampiros. Aroma intenso e memorável."
-                            data-preco="75.00">Ver Detalhes</button>
-                    </div>
-                </div>
+            <label for="qtd1">Quantidade:</label>
+            <input
+              type="number"
+              class="qtd-produto"
+              id="qtd1"
+              value="1"
+              min="1"
+            />
+            <div class="actions">
+              <button
+                class="btn btn-primary btn-adicionar"
+                data-index="0"
+                data-nome="Salame Corrosivo Paranormal"
+              >
+                Adicionar
+              </button>
+              <button
+                class="btn btn-outline-secondary btn-ver-detalhes"
+                data-nome="Salame Corrosivo Paranormal"
+                data-descricao="Criado sob condições inexplicáveis. Picante, misterioso e capaz de dissolver o ácido."
+                data-preco="50.00"
+              >
+                Ver Detalhes
+              </button>
             </div>
-
-            <div class="card">
-                <img src="https://picsum.photos/seed/p3/400/200" alt="Produto 3">
-                <div class="card-body">
-                    <h5 class="card-title">Chapéu de Antena</h5>
-                    <p class="card-text">Capta sinais, ideias aleatórias e talvez estações de rádio de outro país.</p>
-                    <p class="card-price">R$ 100,00</p>
-                    <div class="form-check">
-                        <input class="item-produto" type="checkbox" value="100.00" id="produto3">
-                        <label for="produto3">Selecionar</label>
-                    </div>
-                    <label for="qtd3">Quantidade:</label>
-                    <input type="number" class="qtd-produto" id="qtd3" value="1" min="1">
-                    <div class="actions">
-                        <button class="btn btn-primary btn-adicionar" data-index="2" data-nome="Chapéu de Antena">Adicionar</button>
-                        <button class="btn btn-outline-secondary btn-ver-detalhes"
-                            data-nome="Chapéu de Antena"
-                            data-descricao="Capta sinais, ideias aleatórias e talvez estações de rádio de outro país. Manual em guarani."
-                            data-preco="100.00">Ver Detalhes</button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
 
-        <div class="resumo-total">
-            <h3>Valor Total: <span id="valor-total">R$ 0,00</span></h3>
-            <a href="compra.html" class="btn btn-primary" id="btn-compra" disabled>Concluir Compra</a>
+        <div class="card">
+          <img src="https://picsum.photos/seed/p2/400/200" alt="Produto 2" />
+          <div class="card-body">
+            <h5 class="card-title">Sabonete de Alho</h5>
+            <p class="card-text">
+              Remove sujeira, energias negativas e possivelmente vampiros.
+            </p>
+            <p class="card-price">R$ 75,00</p>
+            <div class="form-check">
+              <input
+                class="item-produto"
+                type="checkbox"
+                value="75.00"
+                id="produto2"
+              />
+              <label for="produto2">Selecionar</label>
+            </div>
+            <label for="qtd2">Quantidade:</label>
+            <input
+              type="number"
+              class="qtd-produto"
+              id="qtd2"
+              value="1"
+              min="1"
+            />
+            <div class="actions">
+              <button
+                class="btn btn-primary btn-adicionar"
+                data-index="1"
+                data-nome="Sabonete de Alho"
+              >
+                Adicionar
+              </button>
+              <button
+                class="btn btn-outline-secondary btn-ver-detalhes"
+                data-nome="Sabonete de Alho"
+                data-descricao="Remove sujeira, energias negativas e possivelmente vampiros. Aroma intenso e memorável."
+                data-preco="75.00"
+              >
+                Ver Detalhes
+              </button>
+            </div>
+          </div>
         </div>
+
+        <div class="card">
+          <img src="https://picsum.photos/seed/p3/400/200" alt="Produto 3" />
+          <div class="card-body">
+            <h5 class="card-title">Chapéu de Antena</h5>
+            <p class="card-text">
+              Capta sinais, ideias aleatórias e talvez estações de rádio de
+              outro país.
+            </p>
+            <p class="card-price">R$ 100,00</p>
+            <div class="form-check">
+              <input
+                class="item-produto"
+                type="checkbox"
+                value="100.00"
+                id="produto3"
+              />
+              <label for="produto3">Selecionar</label>
+            </div>
+            <label for="qtd3">Quantidade:</label>
+            <input
+              type="number"
+              class="qtd-produto"
+              id="qtd3"
+              value="1"
+              min="1"
+            />
+            <div class="actions">
+              <button
+                class="btn btn-primary btn-adicionar"
+                data-index="2"
+                data-nome="Chapéu de Antena"
+              >
+                Adicionar
+              </button>
+              <button
+                class="btn btn-outline-secondary btn-ver-detalhes"
+                data-nome="Chapéu de Antena"
+                data-descricao="Capta sinais, ideias aleatórias e talvez estações de rádio de outro país. Manual em guarani."
+                data-preco="100.00"
+              >
+                Ver Detalhes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="resumo-total">
+        <h3>Valor Total: <span id="valor-total">R$ 0,00</span></h3>
+        <a href="compra.html" class="btn btn-primary" id="btn-compra" disabled
+          >Concluir Compra</a
+        >
+      </div>
     </main>
 
     <div class="modal-overlay" id="produtoModal">
-        <div class="modal-dialog">
-            <div class="modal-header">
-                <h5 id="modalNome"></h5>
-                <button class="btn-close" id="btn-fechar-modal">✕</button>
-            </div>
-            <div class="modal-body">
-                <p id="modalDescricao"></p>
-                <p><strong>Preço: <span id="modalPreco"></span></strong></p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="btn-fechar-modal-footer">Fechar</button>
-            </div>
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h5 id="modalNome"></h5>
+          <button class="btn-close" id="btn-fechar-modal">✕</button>
         </div>
+        <div class="modal-body">
+          <p id="modalDescricao"></p>
+          <p>
+            <strong>Preço: <span id="modalPreco"></span></strong>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="btn-fechar-modal-footer">
+            Fechar
+          </button>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="../js/main.js"></script>
-</body>
+  </body>
 </html>
