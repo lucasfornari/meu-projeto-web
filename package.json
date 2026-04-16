@@ -25,11 +25,11 @@
     "date-fns": "^4.1.0"
   },
   "lint-staged": {
+    "*.{js,ts,jsx,tsx,html,css,json,md}": [
+      "prettier --write"
+    ],
     "*.{js,ts,jsx,tsx}": [
       "eslint --fix"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
     ]
   },
   "main": "eslint.config.js",
