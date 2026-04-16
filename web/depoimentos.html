@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fornari</title>
+    <title>Fornari - Depoimentos</title>
     <!-- aplica o tema antes do render para evitar flash branco -->
     <script>var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t);</script>
-    <link rel="stylesheet" href="styles/main.scss">
+    <link rel="stylesheet" href="../styles/main.scss">
 </head>
 <body>
     <nav class="navbar">
-        <a class="navbar-brand" href="index.html">Meu Projeto Web</a>
+        <a class="navbar-brand" href="../index.html">Meu Projeto Web</a>
         <button class="navbar-toggler" id="navbar-toggler">☰</button>
         <ul class="navbar-nav" id="navbarNav">
-            <li><a class="nav-link active" href="index.html">Home</a></li>
-            <li><a class="nav-link" href="web/produtos.html">Produtos</a></li>
-            <li><a class="nav-link" href="web/contato.html">Contato</a></li>
-            <li><a class="nav-link" href="web/depoimentos.html">Depoimentos</a></li>
+            <li><a class="nav-link" href="../index.html">Home</a></li>
+            <li><a class="nav-link" href="produtos.html">Produtos</a></li>
+            <li><a class="nav-link" href="contato.html">Contato</a></li>
+            <li><a class="nav-link active" href="depoimentos.html">Depoimentos</a></li>
         </ul>
         <button class="btn btn-outline-light" id="btn-tema">Mudar Tema</button>
     </nav>
 
     <main>
-        <h1>Lançamento Oficial: Bem-vindo ao Nosso Novo Produto</h1>
-
         <h2>O que nossos clientes dizem</h2>
         <div class="depoimentos-grid" id="lista-depoimentos"></div>
     </main>
 
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="../js/main.js"></script>
 </body>
 </html>

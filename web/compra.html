@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fornari - Compra</title>
+    <!-- aplica o tema antes do render para evitar flash branco -->
+    <script>var t=localStorage.getItem("tema");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+    <link rel="stylesheet" href="../styles/main.scss">
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="../index.html">Meu Projeto Web</a>
+        <button class="navbar-toggler" id="navbar-toggler">☰</button>
+        <ul class="navbar-nav" id="navbarNav">
+            <li><a class="nav-link" href="../index.html">Home</a></li>
+            <li><a class="nav-link" href="produtos.html">Produtos</a></li>
+            <li><a class="nav-link" href="contato.html">Contato</a></li>
+            <li><a class="nav-link" href="depoimentos.html">Depoimentos</a></li>
+        </ul>
+        <button class="btn btn-outline-light" id="btn-tema">Mudar Tema</button>
+    </nav>
+
+    <main>
+        <h1>Finalizar Compra</h1>
+
+        <div id="alert-compra"></div>
+
+        <div class="compra-grid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Produtos no Carrinho</h5>
+                    <div id="carrinhoLista"></div>
+                    <hr>
+                    <h5>Total: <span id="totalCarrinho">R$ 0,00</span></h5>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Método de Pagamento</h5>
+                    <form id="formPagamento">
+                        <div class="form-check">
+                            <input type="radio" name="pagamento" id="credito" value="Cartão de Crédito" checked>
+                            <label for="credito">Cartão de Crédito</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="pagamento" id="debito" value="Cartão de Débito">
+                            <label for="debito">Cartão de Débito</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="pagamento" id="boleto" value="Boleto Bancário">
+                            <label for="boleto">Boleto Bancário</label>
+                        </div>
+                        <button type="submit" class="btn btn-success">Finalizar Compra</button>
+                        <button type="button" class="btn btn-danger" id="btnLimpar">Limpar Carrinho</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

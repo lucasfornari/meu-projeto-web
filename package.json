@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Site multi-páginas desenvolvido com HTML, Bootstrap 5 e JavaScript puro como exercício prático de desenvolvimento front-end e controle de versão com Git.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -18,7 +18,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
-    "vite": "^8.0.3"
+    "vite": "^8.0.3",
+    "sass": "^1.89.0"
   },
   "dependencies": {
     "date-fns": "^4.1.0"
@@ -30,5 +31,14 @@
     "*.{json,css,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasfornari/meu-projeto-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lucasfornari/meu-projeto-web/issues"
+  },
+  "homepage": "https://github.com/lucasfornari/meu-projeto-web#readme"
 }
