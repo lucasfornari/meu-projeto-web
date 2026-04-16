@@ -36,6 +36,11 @@ $font-color:       #212529;
     --secondary: #95a5a6;
 }
 
+
+// Essa parte:
+// - Remove estilos padrão do navegador (margin e padding)
+// - Padroniza o cálculo de tamanho dos elementos (border-box)
+// - Garante consistência no layout
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
