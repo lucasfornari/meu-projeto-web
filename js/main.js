@@ -1,6 +1,7 @@
 import { carregarDepoimentos, enviarFormulario, buscarCep } from './api.js';
 
 // tema
+var temas = ['light', 'dark', 'blue', 'green'];
 var temaSalvo = localStorage.getItem('tema');
 if (temaSalvo) document.documentElement.setAttribute('data-theme', temaSalvo);
 
@@ -10,12 +11,13 @@ document.getElementById('navbar-toggler')?.addEventListener('click', () => {
 });
 
 document.getElementById('btn-tema')?.addEventListener('click', () => {
-  var novo =
-    document.documentElement.getAttribute('data-theme') === 'dark'
-      ? 'light'
-      : 'dark';
-  document.documentElement.setAttribute('data-theme', novo);
-  localStorage.setItem('tema', novo);
+  var temaAtual =
+    document.documentElement.getAttribute('data-theme') || 'light';
+  var indiceAtual = temas.indexOf(temaAtual);
+  var indiceProximo = (indiceAtual + 1) % temas.length;
+  var novoTema = temas[indiceProximo];
+  document.documentElement.setAttribute('data-theme', novoTema);
+  localStorage.setItem('tema', novoTema);
 });
 
 // alerta temporário
