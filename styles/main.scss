@@ -66,6 +66,37 @@ $font-color:       #212529;
     --secondary: #06b6d4;
 }
 
+[data-theme="red"] {
+    --bg:        #f0f9ff;
+    --text:      #6e0c0c;
+    --text-muted:#a10303;
+    --bg-nav:    #c90000;
+    --text-nav:  #f0f9ff;
+    --border:    #f83838;
+    --bg-card:   #ffffff;
+    --bg-input:  #eff6ff;
+    --primary:   #c70202;
+    --success:   #059669;
+    --danger:    #dc6626;
+    --secondary: #d40606;
+}
+
+[data-theme="brasil"] {
+    --bg:        #fff700;
+    --text:      #00812d;
+    --text-muted:#27603b;
+    --bg-nav:    #003c0e;
+    --text-nav:  #fef5e7;
+    --border:    #27a745;
+    --bg-card:   #ffffff;
+    --bg-input:  #f0f8f4;
+    --primary:   #27a745;
+    --success:   #ffc72c;
+    --danger:    #002776;
+    --secondary: #ffc72c;
+}
+
+
 
 // Essa parte:
 // - Remove estilos padrão do navegador (margin e padding)

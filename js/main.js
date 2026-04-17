@@ -1,7 +1,7 @@
 import { carregarDepoimentos, enviarFormulario, buscarCep } from './api.js';
 
 // tema
-var temas = ['light', 'dark', 'blue', 'green'];
+var temas = ['light', 'dark', 'blue', 'green', 'red', 'brasil'];
 var temaSalvo = localStorage.getItem('tema');
 if (temaSalvo) document.documentElement.setAttribute('data-theme', temaSalvo);
 
